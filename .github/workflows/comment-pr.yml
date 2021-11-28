@@ -1,0 +1,26 @@
+name: comment-pr
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  build:
+    name: Comment on PRs
+    runs-on: ubuntu-18.04
+    timeout-minutes: 10 # when change this, please consider credential duration too, see role-duration-seconds
+
+    steps:
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ### Kia ora 👋
+
+            Thanks for submitting a pull request on this repo. 
+            
+            Baloo 2 Latin is a modified version of Baloo 2. New features or improvements on type design won't be considered here. Please submit them at [@EkType/Baloo2](https://github.com/EkType/Baloo2/pulls).
+
+            Bug fixes will be reviewed, if there is a corresponding issue opened please add that in the PR description.

@@ -1,0 +1,26 @@
+name: comment-issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  build:
+    name: Comment on issues
+    runs-on: ubuntu-18.04
+    timeout-minutes: 10 # when change this, please consider credential duration too, see role-duration-seconds
+
+    steps:
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ### Kia ora 👋
+
+            Thanks for submitting an issue on this repo. 
+            
+            Baloo 2 Latin is a modified version of Baloo 2. New features or improvements on type design won't be considered here. Please submit them at [@EkType/Baloo2](https://github.com/EkType/Baloo2/issues).
+
+            Bugs will be fixed where doable – please outline what version and file type you're using (ie. v1.001 woff2) and any other information that might helpful with troubleshooting.
